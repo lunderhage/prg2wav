@@ -1,10 +1,11 @@
 #!/bin/sh
+echo "PRESS PLAY AND RECORD ON TAPE"
 TMP=`mktemp -d`
 echo "Temporary directory for D64 Files: $TMP"
-cp $1 $TMP/.archive.d64
+cp $1 $TMP
 cd $TMP
 c1541 -attach $1 8 -extract
-rm $TMP/.archive
-
+rm $1
+for i in *; do prg2wav -i "$i" -e "$i"; done
 rm $TMP/*
 rmdir $TMP
