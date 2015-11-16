@@ -1,0 +1,100 @@
+.TH prg2wav 1 "4th July, 1999"
+.SH NAME
+prg2wav \- convert PC emulator files to a Commodore 64 tape
+.SH SYNOPSIS
+prg2wav -h|-v
+.P
+prg2wav -l file [file...]
+.P
+prg2wav [-i] [-o output_file_name] file [file...]
+.SH DESCRIPTION
+If the
+.B -l
+option is not specified,
+.I prg2wav
+scans each file given on the command line and, if it is a .PRG, a .P00 or
+a .T64 with a single used entry, converts it to a sound (by default) or a .WAV
+file (if the
+.B
+-o
+option is used). If it is a .T64 with more than one used entry,
+.I prg2wav
+interactively asks which entries should be converted, and converts them.
+The entries must be given as a comma-separated list of ranges, where a range
+can be:
+.TP
+*
+a number
+.TP
+* 
+.BR lower_bound-upper_bound,
+where
+.B
+lower_bound
+and
+.B
+upper_bound
+can be either empty or numbers. If
+.B
+lower_bound
+is empty, it is assumed to be 1. If
+.B
+upper_bound
+is empty, it is assumed to be the total number of entries in the .T64 file.
+.PP
+If the
+.B
+-l
+option is used,
+.I prg2wav
+will list the contents of each file in the command line. For .PRG, it will
+display the start and end addresses. For .P00, it will display the start and
+end addresses and the C64 name. For .T64, it will display the number of total
+and used entries, the tape image name and, for each entry, the entry number,
+the name and the start and end addresses.
+.P
+.I prg2wav
+will only recognize standard entries in .T64 files (not memory snapshots).
+.SH OPTIONS
+.TP
+.B -h
+Show a help message and exit successfully.
+.TP
+.B -i
+Generate an inverted waveform. Some soundcards invert the signal
+when playing back, i.e. they turn positive impulses into negative ones and vice
+versa. If a normal waveform is played back with such a soundcard, a C64 will
+not be able to recognize it. If an inverted waveform is played back with such
+a soundcard, the soundcard will invert it again, turning it into a normal
+waveform, so a C64 will recognize it. If you get no results without the
+.B -i
+option, try enabling it.
+.TP
+.B -l
+Do not create a .WAV file, but show the contents of the input files.
+.TP
+.BI \-o " output\_file\_name"
+Use
+.I
+output\_file\_name
+as output. If
+.I
+output\_file\_name
+does not end with
+.I .WAV
+or
+.IR .wav ,
+.I .wav
+will be appended at the end.
+.TP
+.B -v
+Show version and copyright info and exit successfully
+.SH AUTHOR
+Fabrizio Gennari (fabrigennari@iol.it)
+.SH REFERENCES
+.I http://www.fairlight.to/docs/text/formats.zip
+.IP
+Peter Schepers' guide to Commodore 64 file formats
+.SH SEE ALSO
+.B wav2prg
+(1)

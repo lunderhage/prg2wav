@@ -1,0 +1,7 @@
+Installation of wav-prg
+
+1. Check the directories in Makefile
+2. Type 'make'. This will create the executables wavprg and prg2wav
+3. Type 'make install'. This will copy the executables and the man
+   pages to the relevant directories.
+4. To uninstall the package, type 'make uninstall'

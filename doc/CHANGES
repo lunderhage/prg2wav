@@ -1,0 +1,39 @@
+Changes in wav-prg
+==================
+
+wav2prg
+=======
+
+19th April, 1999: First release (1.0), by Fabrizio Gennari
+
+4th July, 1999  : Version 1.1 released. This release is mostly due to Janne
+                  Veli Kujala, who suggested many improvements to version 1.0.
+
+* Input from the sound card is now supported (Janne Veli Kujala)
+
+* Buffered file read causes a dramatic improvement in speed when converting
+  from .WAV files (Janne Veli Kujala)
+
+* New bit-detecting algorithm, which works much better even for low-quality
+  tapes (Janne Veli Kujala and Fabrizio Gennari)
+
+* Warning when the bits are possibly wrong (Janne Veli Kujala)
+
+* Statistics for the numbers of 0s and 1s found, and average impulse length
+  (Janne Veli Kujala)
+
+* Adjust mode (Fabrizio Gennari)
+
+* libm is not required anymore (Janne Veli Kujala)
+
+prg2wav
+=======
+
+19th April, 1999: First release (1.0), by Fabrizio Gennari
+
+4th July, 1999  : Version 1.1 released. Some of the changes made by Janne
+                  Veli Kujala to wav2prg were ported to prg2wav
+
+* Output to the sound card is now supported
+
+* libm is not required anymore

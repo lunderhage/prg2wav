@@ -1,0 +1,117 @@
+WAV2PRG for Linux
+By Fabrizio Gennari and Janne Veli Kujala, 1999
+
+This programs converts Turbo Tape 64 files to PC in emulator-readable format
+(.PRG, .P00 or .T64), so they can be played with PC emulators. The Turbo Tape
+64 files can be read either from WAV samples, or directly from the sound card. 
+This is done in three steps.
+
+1. CONNECTING THE TAPE PLAYER TO THE SOUND CARD
+For this you need:
+- a sound card
+- a tape player
+- a cable connecting the output of your tape player (e.g., the headphone
+  jack socket) to the input of your sound card (on a Sound Blaster, this
+  is a jack socket marked as LINE IN)
+- a sampling program (e.g. wavrec, included in the SuSe distribution in
+  the wavplay package)
+
+First of all, connect the tape player to the sound card. Set the mixing
+options of your sound card so the volume level of the external input (LINE)
+is the highest, and the other recording sources are disabled (this is done
+with a mixer program, such as aumix, xmix or xmixer). Now you should hear
+the sounds emitted by the player from the speakers of your sound card.
+If you don't, you should check whether your card is properly configured.
+Set the volume of your computer speakers low, so you will not be made deaf
+by the grating sound coming from the tape.
+Adjust the volume of your player to a reasonably high level (half the maximum
+should be fine). The -a option of wav2prg can be helpful for this: insert a
+valid Turbo Tape 64 tape in the player, play it and type 'wav2prg -a'.
+You should change the volume until lines such as
+
+data pos: byte 510, bit 1, impulse len 8
+
+stop appearing. If all volume settings don't work, exit the program with
+Ctrl-C and type 'wav2prg -ai'.
+If you want to convert files directly from the sound card, you should be ready
+now. If you want to create a WAV file, set the recording options as it follows:
+* Sampling frequency: 44100 Hz
+* Sample size: 8 bits
+* Format: PCM uncompressed, mono
+WAV-PRG will not recognize WAV files in a different format than this.
+Now, sample the Turbo Tape file and save it in WAV format.
+
+2. CONVERTING THE FILE
+This is what WAV2PRG does.
+
+For a full description of WAV2PRG's usage, see the man page.
+The basic usage is:
+
+wav2prg [-i] [input .WAV file]
+
+which will convert the Turbo Tape 64 files in .PRG format. If you do not
+specify a .WAV file, the sound card will be used as input.
+
+WAV2PRG will search for a Turbo Tape header. When it finds one, the message
+"Found!" appears. You should see the C64 filename, and the start and end
+addresses.
+
+During the conversion, lines like this could appear:
+
+data pos: byte 3, bit 0, impulse len 8
+
+They mean that a bit is possibly wrong. If none appears, the loading will
+most certainly succeed. If some appear, there is some chance that the loading
+fails (but won't do necessarily).
+
+At the end of the conversion, you will see the number of 0s and 1s found in
+the file, followed by one of these messages:
+* "Checksum error!": this is the same as ?LOAD  ERROR. You could try
+sampling the file again, adjusting the output volume of your tape player so
+it is not too high nor too low. Disable all the recording sources to your
+soundcard but the external one (LINE IN). You could also try "regenerating
+the signal": don't worry, it is easier than it sounds. Just load the file
+on your C64 and save it on a new tape. The freshly-saved file will be
+easier to convert.
+* "The WAV file ended unexpectedly" (only fro conversion from WAV files): the
+final part of the file was not sampled. Try sampling for a longer time.
+* "Interrupted while converting" (only for conversion from sound card):
+Ctrl-C was pressed before the conversion ended.
+* "Successful": everything went fine.
+
+After this, WAV2PRG will search for another header, until the end of the
+.WAV file, or Ctrl-C is pressed. Then, it will exit.
+
+What if WAV2PRG cannot find any header? There can be a number of reasons
+behind this: a low-quality tape, too low or too high volume from the tape
+player, but the main cause is a soundcard which inverts waveforms. If it
+does, WAV2PRG will not be able to recognize them. Try again, this
+time using the -i option: this will tell WAV2PRG that the file has an
+inverted waveform. This will work in most cases.
+
+In fact, another cause could be that the C64 file was not in Turbo Tape 64
+format. The only safe way to check this is to try loading it using Turbo
+Tape 64 (available at WAV-PRG's homepage). If Turbo Tape 64 can load it,
+then WAV2PRG can convert it. If not, it can't.
+
+3. PLAYING THE GAME
+You need a C64 emulator for this.
+
+All the most popular emulators recognize all or some of the .PRG, .P00 and
+.T64 formats.
+
+4. LICENSE AND (NON)WARRANTY
+This program is distributed under the GNU General Public License. See the
+file LICENSE for details.
+
+5. LATEST VERSION
+The latest version of the program is available at
+http://www.geocities.Com/SiliconValley/Platform/8224/wavprg.html .
+
+6. CONTACTING THE AUTHORS
+If you have suggestions, bug reports etc., you can send mail to the authors
+at: 
+Fabrizio Gennari (fabrigennari@iol.it)
+Janne Veli Kujala (jvkujala@cc.jyu.fi)
+
+Enjoy!
