@@ -1,0 +1,10 @@
+#!/bin/sh
+TMP=`mktemp -d`
+echo "Temporary directory for D64 Files: $TMP"
+cp $1 $TMP/.archive.d64
+cd $TMP
+c1541 -attach $1 8 -extract
+rm $TMP/.archive
+
+rm $TMP/*
+rmdir $TMP

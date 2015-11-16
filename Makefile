@@ -14,6 +14,7 @@ prg2wav: prg2wav.c
 install: wav2prg prg2wav
 	install -o root -g root -m 755 wav2prg $(BINDIR)
 	install -o root -g root -m 755 prg2wav $(BINDIR)
+	install -o root -g root -m 755 d642wav $(BINDIR)
 	install -o root -g root -m 644 man/prg2wav.1 $(MANDIR)
 	install -o root -g root -m 644 man/wav2prg.1 $(MANDIR)
 uninstall:

@@ -31,6 +31,7 @@
 #endif
 
 int inverted_waveform=0;
+int override_entry=0;
 struct entry_element{
   int entry;
   struct entry_element* next;
@@ -268,10 +269,13 @@ void WAV_write(unsigned char byte,int uscita){
 
 void convert(int ingresso,int uscita,int start_address,int end_address,
 	     int offset,char* entry_name){
+  char zero[9]={0,0,0,0,0,0,0,0,0};
   int count;
   unsigned char start_address_low,start_address_high,end_address_low,
     end_address_high,byte;
   unsigned char checksum=0;
+  //for(count=1;count<=10000;count++)write(uscita,zero,9);  // Wait before actually dumping audio
+  //for(count=1;count<=5000;count++)WAV_write(0,uscita);  // Wait before actually dumping audio
   start_address_high=start_address/256;
   start_address_low=start_address-start_address_high*256;
   end_address_high=end_address/256;
@@ -466,6 +470,7 @@ int main(int numarg,char** argo){
   int ingresso;
   int uscita;
   char* output_file_name=NULL;
+  char* override_entry_name=NULL;
   char* temporary_file_name;
   char* end;
   int append_WAV=0;
@@ -481,7 +486,7 @@ int main(int numarg,char** argo){
 
   /* Get options */
 
-  while ((opzione=getopt(numarg,argo,"hilo:v"))!=EOF){
+  while ((opzione=getopt(numarg,argo,"hiloe:v"))!=EOF){
     switch(opzione){
     case 'h':
       show_help=1;
@@ -495,6 +500,11 @@ int main(int numarg,char** argo){
     case 'o':
       output_file_name=(char*)malloc(strlen(optarg)+4);
       strcpy(output_file_name,optarg);
+      break;
+    case 'e':
+      override_entry=1;
+      override_entry_name=(char*)malloc(strlen(optarg)+4);
+      strcpy(override_entry_name,optarg);
       break;
    case 'v':
       show_version=1;
@@ -614,6 +624,13 @@ int main(int numarg,char** argo){
       printf("Converting %s\n",argo[current_argument]);
       get_entry(count,ingresso,&start_address,&end_address,&offset,
 		entry_name);
+      if(override_entry) {
+        int ix;
+        for(ix = 0; ix < strlen(override_entry_name); ix++) {
+          entry_name[ix] = toupper(override_entry_name[ix]);
+        }
+      }
+      printf("Entry Name: %s (%d)\n",entry_name,strlen(entry_name));
       convert(ingresso,uscita,start_address,end_address,offset,entry_name);
     };
 
