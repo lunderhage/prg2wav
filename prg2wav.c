@@ -23,6 +23,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include <math.h>
 #include <linux/soundcard.h>
 
@@ -486,7 +488,7 @@ int main(int numarg,char** argo){
 
   /* Get options */
 
-  while ((opzione=getopt(numarg,argo,"hiloe:v"))!=EOF){
+  while ((opzione=getopt(numarg,argo,"hilo:e:v"))!=EOF){
     switch(opzione){
     case 'h':
       show_help=1;
